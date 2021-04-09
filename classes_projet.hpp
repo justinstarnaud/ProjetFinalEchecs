@@ -250,19 +250,14 @@ private:
 	//puisque la seule piece dans notre cas qui peut rencontrer une piece dans son chemin est la tour, le code suitant sera implementer en consequent. 
 	//Si jamais une version complete du jeu voudra etre faites, le code suivant devra etre changer pour considerer que le fou et la reine (le pion aussi lorsquil avance de deux) pouraient avoir se probleme.
 	bool pieceEnChemin(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) { 
+		pair<int, int> position;
 		int variationLigne = abs(positionActuelleX - positionVoulueX);
-		int variationColonne = abs(positionActuelleY - positionVoulueY);
-		if (variationLigne > 0) {
-			auto position = minmax(positionActuelleX, positionVoulueX);
-			for (int i = position.first + 1; i < position.second; i++) { //on ne regarde pas sil y a une piece a la positon acteulle ni voulu, car ceci est deja considerer dans la fonction effectuerMouvement
-				if (echiquier_[i][positionActuelleY] != nullptr) return true;
-			}
-		}
-		else {
-			auto position = minmax(positionActuelleY, positionVoulueY);
-			for (int i = position.first + 1; i < position.second; i++) { //on ne regarde pas sil y a une piece a la positon actuelle ni voulu, ceci est deja considerer dans la fonction effectuerMouvement
-				if (echiquier_[positionActuelleX][i] != nullptr) return true;
-			}
+		variationLigne > 0 ? position = minmax(positionActuelleX, positionVoulueX) : position = minmax(positionActuelleY, positionVoulueY);
+		
+		bool enChemin;
+		for (int i = position.first + 1; i < position.second; i++) { //on ne regarde pas sil y a une piece a la positon acteulle ni voulu, car ceci est deja considerer dans la fonction effectuerMouvement
+			variationLigne > 0 ? enChemin = (echiquier_[i][positionActuelleY] != nullptr) : enChemin = (echiquier_[positionActuelleX][i] != nullptr);
+			if (enChemin) return true;
 		}
 		return false;
 	}
