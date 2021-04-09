@@ -74,16 +74,28 @@ TEST(TestTour, TestMouvement) {
 	EXPECT_FALSE(tour.setPosition(5, 4));
 }
 
-TEST(TestEchiquier, TestMouvementValide) {
+TEST(TestEchiquier, TestMouvement) {
 	Echiquier echiquier = Echiquier();
+	// test de mouvement d'une case sans piece
+	EXPECT_FALSE(echiquier.effectuerMouvement(5, 0, 2, 6));
+	EXPECT_FALSE(echiquier.effectuerMouvement(2, 1, 2, 6));
+
+	// test mouvement valide
 	EXPECT_TRUE(echiquier.effectuerMouvement(0, 0, 5, 0));
 	EXPECT_TRUE(echiquier.effectuerMouvement(7, 1, 5, 2));
 	EXPECT_TRUE(echiquier.effectuerMouvement(0, 4, 1, 5));
+
+	// test de mouvement vers sa propre case
+	EXPECT_FALSE(echiquier.effectuerMouvement(0, 4, 0, 4));
+	EXPECT_FALSE(echiquier.effectuerMouvement(7, 7, 7, 7));
+	
 }
 
 TEST(TestEchiquier, TestPieceEnChemin) {
 	Echiquier echiquier = Echiquier();
 	echiquier.effectuerMouvement(7, 0, 4, 0);
+
+	// test de mouvement impossible si piece dans la trajectoire
 	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 7, 0));
 	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 0, 3));
 	echiquier.effectuerMouvement(0, 6, 2, 7);
@@ -110,12 +122,12 @@ TEST(TestEchiquier, TestManger) {
 	EXPECT_EQ(tourBlanche.getPosition().first, echiquier.getPiece(7, 0)->getPosition().first);
 	EXPECT_EQ(tourBlanche.getPosition().second, echiquier.getPiece(7, 0)->getPosition().second);
 
+	// On test qu'on ne peut manger une piece de sa couleur
+	echiquier.effectuerMouvement(0, 1, 2, 0);
+	EXPECT_EQ(blanc, echiquier.getPiece(2, 0)->getCouleur());
+	EXPECT_FALSE(echiquier.effectuerMouvement(7, 0, 2, 0));
+
 
 }
-
-//TEST(TestEchiquier, TestPieceEnChemin) {
-//	Echiquier echiquier = Echiquier();
-//
-//}
 
 #endif
