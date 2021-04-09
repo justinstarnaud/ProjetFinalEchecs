@@ -85,6 +85,13 @@ TEST(TestTour, TestMouvement) {
 
 TEST(TestEchiquier, TestMouvement) {
 	Echiquier echiquier = Echiquier();
+	// test de mouvement invalide pour une tour...
+	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 2, 1));
+	// ...cavalier
+	EXPECT_FALSE(echiquier.effectuerMouvement(0, 1, 5, 1));
+	// ...roi
+	EXPECT_FALSE(echiquier.effectuerMouvement(0, 4, 2, 5));
+
 	// test de mouvement d'une case sans piece
 	EXPECT_FALSE(echiquier.effectuerMouvement(5, 0, 2, 6));
 	EXPECT_FALSE(echiquier.effectuerMouvement(2, 1, 2, 6));
@@ -96,8 +103,7 @@ TEST(TestEchiquier, TestMouvement) {
 
 	// test de mouvement vers sa propre case
 	EXPECT_FALSE(echiquier.effectuerMouvement(0, 4, 0, 4));
-	EXPECT_FALSE(echiquier.effectuerMouvement(7, 7, 7, 7));
-	
+	EXPECT_FALSE(echiquier.effectuerMouvement(7, 7, 7, 7));	
 }
 
 TEST(TestEchiquier, TestPieceEnChemin) {
@@ -105,11 +111,14 @@ TEST(TestEchiquier, TestPieceEnChemin) {
 	echiquier.effectuerMouvement(7, 0, 4, 0);
 
 	// test de mouvement impossible si piece dans la trajectoire
-	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 7, 0));
-	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 0, 3));
-	echiquier.effectuerMouvement(0, 6, 2, 7);
-	EXPECT_FALSE(echiquier.effectuerMouvement(7, 7, 1, 7));
+	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 7, 0)); // saut verticale impossible
+	EXPECT_FALSE(echiquier.effectuerMouvement(0, 0, 0, 3)); // saut horizontal impossible
 
+	echiquier.effectuerMouvement(0, 6, 2, 7);
+	EXPECT_FALSE(echiquier.effectuerMouvement(7, 7, 1, 7)); // tour ne peut faire un saut verticale
+
+	EXPECT_TRUE(echiquier.effectuerMouvement(7, 7, 3, 7));
+	EXPECT_TRUE(echiquier.effectuerMouvement(2, 7, 4, 6));
 }
 
 TEST(TestEchiquier, TestManger) {
@@ -135,8 +144,6 @@ TEST(TestEchiquier, TestManger) {
 	echiquier.effectuerMouvement(0, 1, 2, 0);
 	EXPECT_EQ(blanc, echiquier.getPiece(2, 0)->getCouleur());
 	EXPECT_FALSE(echiquier.effectuerMouvement(7, 0, 2, 0));
-
-
 }
 
 #endif

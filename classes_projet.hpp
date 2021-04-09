@@ -250,6 +250,7 @@ private:
 	//puisque la seule piece dans notre cas qui peut rencontrer une piece dans son chemin est la tour, le code suitant sera implementer en consequent. 
 	//Si jamais une version complete du jeu voudra etre faites, le code suivant devra etre changer pour considerer que le fou et la reine (le pion aussi lorsquil avance de deux) pouraient avoir se probleme.
 	bool pieceEnChemin(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) { 
+		if (dynamic_cast<Tour*>(echiquier_[positionActuelleX][positionActuelleY]) == nullptr) return false; 
 		pair<int, int> position;
 		int variationLigne = abs(positionActuelleX - positionVoulueX);
 		variationLigne > 0 ? position = minmax(positionActuelleX, positionVoulueX) : position = minmax(positionActuelleY, positionVoulueY);
