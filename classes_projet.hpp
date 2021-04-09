@@ -1,9 +1,9 @@
 /*
-Fichier contenant les classes du projet finale et leurs fonctions.
-\file   
-\author Benoit - Paraschivoiu et St - Arnaud
-date    4 avril 2021
-Créé le 1 avril 2021
+* Fichier contenant les classes du projet final et leurs fonctions.
+* file   
+* author Benoit - Paraschivoiu et St - Arnaud
+* date    8 avril 2021
+* Créé le 1 avril 2021
 */
 #pragma once
 

@@ -1,3 +1,10 @@
+/*
+* Fichier contenant les tests sur nos classes du projet final.
+* file
+* author Benoit - Paraschivoiu et St - Arnaud
+* date    8 avril 2021
+* Créé le 1 avril 2021
+*/
 #include "classes_projet.hpp"
 
 #if __has_include("gtest/gtest.h")

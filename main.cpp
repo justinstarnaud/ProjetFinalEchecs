@@ -1,3 +1,10 @@
+/*
+* Fichier main.
+* file
+* author Benoit - Paraschivoiu et St - Arnaud
+* date    8 avril 2021
+* Créé le 1 avril 2021
+*/
 #include "Calc.hpp"
 #include "CalcWindow.hpp"
 
