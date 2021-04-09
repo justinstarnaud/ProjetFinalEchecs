@@ -19,9 +19,12 @@ TEST(TestRoi, TestInitilisation) {
 
 TEST(TestRoi, TestMouvement) {
 	Roi roi = Roi(blanc);
+	//tests avec des mouvements valides
 	EXPECT_TRUE(roi.setPosition(0, 5));
 	EXPECT_TRUE(roi.setPosition(1, 5));
 	EXPECT_TRUE(roi.setPosition(1, 6));
+
+	//tests avec des mouvements invalides
 	EXPECT_FALSE(roi.setPosition(1, 6));
 	EXPECT_FALSE(roi.setPosition(12, 5));
 	EXPECT_FALSE(roi.setPosition(3, 6));
@@ -42,9 +45,12 @@ TEST(TestCavalier, TestInitilisation) {
 
 TEST(TestCavalier, TestMouvement) {
 	Cavalier cav = Cavalier(blanc, gauche);
+	//tests avec des mouvements valides
 	EXPECT_TRUE(cav.setPosition(2, 2));
 	EXPECT_TRUE(cav.setPosition(1, 4));
 	EXPECT_TRUE(cav.setPosition(3, 3));
+
+	//tests avec des mouvements invalides
 	EXPECT_FALSE(cav.setPosition(3, 3));
 	EXPECT_FALSE(cav.setPosition(-1, 5));
 	EXPECT_FALSE(cav.setPosition(3, 6));
@@ -65,9 +71,12 @@ TEST(TestTour, TestInitilisation) {
 
 TEST(TestTour, TestMouvement) {
 	Tour tour = Tour(blanc, gauche);
+	//tests avec des mouvements valides
 	EXPECT_TRUE(tour.setPosition(0, 2));
 	EXPECT_TRUE(tour.setPosition(0, 7));
 	EXPECT_TRUE(tour.setPosition(7, 7));
+
+	//tests avec des mouvements invalides
 	EXPECT_FALSE(tour.setPosition(7, 7));
 	EXPECT_FALSE(tour.setPosition(8, 7));
 	EXPECT_FALSE(tour.setPosition(6, 6));
