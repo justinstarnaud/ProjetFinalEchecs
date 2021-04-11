@@ -271,7 +271,7 @@ private:
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne)
 			{
-				if (dynamic_cast<Roi*>(echiquier_[ligne][colonne]) != nullptr && echiquier_[ligne][colonne]->getCouleur() == couleur)
+				if (dynamic_cast<Roi*>(echiquier_[ligne][colonne]) && echiquier_[ligne][colonne]->getCouleur() == couleur)
 					return echiquier_[ligne][colonne]->getPosition();
 
 			}
@@ -282,12 +282,12 @@ private:
 	bool miseEnEchec(bool couleur) {
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
-			for (int colonne = 0; colonne < nColonnes; colonne)
+			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
-				if (this->effectuerMouvement(ligne, colonne, this->getPositionRoi(couleur).first, this->getPositionRoi(couleur).second)) return true;
-				return false;
+				if (effectuerMouvement(ligne, colonne, getPositionRoi(couleur).first, getPositionRoi(couleur).second)) return true;
 			}
 
 		}
+		return false;
 	}
 };
