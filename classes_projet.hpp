@@ -77,6 +77,9 @@ public:
 		}
 		return false;
 	}
+
+	int positionLigneRoi = positionLigne_;
+	int positionColonneRoi = positionColonne_;
 };
 
 class Cavalier : public Piece {
@@ -261,5 +264,30 @@ private:
 			if (enChemin) return true;
 		}
 		return false;
+	}
+
+	pair<int, int> getPositionRoi(bool couleur) {
+		for (int ligne = 0; ligne < nLignes; ligne++)
+		{
+			for (int colonne = 0; colonne < nColonnes; colonne)
+			{
+				if (dynamic_cast<Roi*>(echiquier_[ligne][colonne]) != nullptr && echiquier_[ligne][colonne]->getCouleur() == couleur)
+					return echiquier_[ligne][colonne]->getPosition();
+
+			}
+
+		}
+	}
+
+	bool miseEnEchec(bool couleur) {
+		for (int ligne = 0; ligne < nLignes; ligne++)
+		{
+			for (int colonne = 0; colonne < nColonnes; colonne)
+			{
+				echiquier_
+
+			}
+
+		}
 	}
 };
