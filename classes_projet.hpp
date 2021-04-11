@@ -284,8 +284,8 @@ private:
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne)
 			{
-				echiquier_
-
+				if (this->effectuerMouvement(ligne, colonne, this->getPositionRoi(couleur).first, this->getPositionRoi(couleur).second)) return true;
+				return false;
 			}
 
 		}
