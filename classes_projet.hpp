@@ -22,12 +22,16 @@ static constexpr int noir = 1;
 static constexpr int nLignes = 8;
 static constexpr int nColonnes = 8;
 
+class ConstructionInvalide : public logic_error {
+public:
+	using logic_error::logic_error;
+};
 
 class Piece {
 public:
 	Piece(bool couleur) { couleur_ = couleur; }
 	virtual ~Piece() = default;
-	Piece(const Piece&) = delete;
+	//Piece(const Piece&) = default;
 	Piece& operator= (const Piece& autrePiece) {
 		if (this != &autrePiece) {
 			positionLigne_ = autrePiece.positionLigne_;
@@ -73,7 +77,7 @@ public:
 		{
 			compteur_++;
 			if (compteur_ > 2) {
-				throw logic_error("Plus de deux instances de roi on ete construite.");
+				throw ConstructionInvalide("Plus de deux instances de roi on ete construite.");
 				compteur_--;
 			}
 			else {
@@ -81,9 +85,9 @@ public:
 				//        roi noir                                   roi blanc
 			}
 		}
-		catch (logic_error& e)
+		catch (ConstructionInvalide& e)
 		{
-			cout << "Deux instances de roi on tente detre construite. Cette construction a ete blocque.";
+			cout << "Erreur: " << e.what() << "Cette construction a ete blocque.";
 		}
 	}
 	~Roi() {
@@ -238,25 +242,25 @@ public:
 		for (int ligne = 0; ligne < nLignes; ligne++) {
 			for (int colonne = 0; colonne < nColonnes; colonne++) {
 				delete echiquier_[ligne][colonne];
+				echiquier_[ligne][colonne] = nullptr;
 			}
 		}
 	}
 
-	Piece* getPiece(int positionLigne, int positionColonne) {
-		return echiquier_[positionLigne][positionColonne];
-	}
+	/*Piece* [8][8] operator= (const Piece* [8][8] autrePiece) {
+		for (int ligne = 0; ligne < nLignes; ligne++)
+		{
+			for (int colonne = 0; colonne < nColonnes; colonne++)
+			{
+				this = autrePiece;
+			}
+	}*/
 	
 	bool effectuerMouvement(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) {
 		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
 		bool retour;
 		Piece* echiquierTemporaire[8][8];
-		for (int ligne = 0; ligne < nLignes; ligne++)
-		{
-			for (int colonne = 0; colonne < nColonnes; colonne++)
-			{
-				echiquierTemporaire[ligne][colonne] = echiquier_[ligne][colonne];
-			}
-		}
+		echiquierTemporaire = echiquier_;
 
 		if (echiquier_[positionActuelleX][positionActuelleY] == nullptr) return false; //peut pas bouger une piece qui existe pas
 		else if (pieceEnChemin(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY)) return false;
@@ -276,16 +280,10 @@ public:
 		}
 
 		// on regarde si la derniere modification a genere un echec
-		if (miseEnEchec(couleur)) {
+		if (miseEnEchec(couleur) && retour) {
 			// on est alors en echec
 			// on veut remettre les pieces a l<etat initial et retourner faux
-			for (int ligne = 0; ligne < nLignes; ligne++)
-			{
-				for (int colonne = 0; colonne < nColonnes; colonne++)
-				{
-					echiquier_[ligne][colonne] = echiquierTemporaire[ligne][colonne];
-				}
-			}
+			echiquier_ = echiquierTemporaire;
 			return false;
 		}
 		return retour;
@@ -303,7 +301,6 @@ private:
 			echiquier_[positionActuelleX][positionActuelleY] = nullptr; //il y a maintenant rien a la position actuelle
 			return true;
 		}
-		
 		return false;
 	}
 
