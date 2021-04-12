@@ -45,17 +45,18 @@ public:
 	pair<int, int> getPosition() const { return { positionLigne_, positionColonne_ }; } 
 	bool getCouleur() const { return couleur_; }
 
-protected:
-	int positionLigne_=0;
-	int positionColonne_=0;
-	bool couleur_; //0 = blanc, 1 = noir
-
 	virtual bool mouvementValide(int positionLigneVoulue, int positionColonneVoulue) {
 		if ((positionLigneVoulue < 0) | (positionLigneVoulue >= nLignes)) return false;
 		else if ((positionColonneVoulue < 0) | (positionColonneVoulue >= nColonnes)) return false;
 		else if ((positionColonneVoulue == positionColonne_ && positionLigneVoulue == positionLigne_)) return false;
 		return true;
 	}
+
+protected:
+	int positionLigne_=0;
+	int positionColonne_=0;
+	bool couleur_; //0 = blanc, 1 = noir
+
 };
 
 class Roi : public Piece {
@@ -232,6 +233,7 @@ public:
 			}
 		}
 		else { //donc il ny a pas de piece
+			//regarder la mise en echec
 			return echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, false);
 		}
 	}
@@ -271,23 +273,22 @@ private:
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne)
 			{
-				if (dynamic_cast<Roi*>(echiquier_[ligne][colonne]) != nullptr && echiquier_[ligne][colonne]->getCouleur() == couleur)
+				if (dynamic_cast<Roi*>(echiquier_[ligne][colonne]) && echiquier_[ligne][colonne]->getCouleur() == couleur)
 					return echiquier_[ligne][colonne]->getPosition();
-
 			}
-
 		}
 	}
 
 	bool miseEnEchec(bool couleur) {
+		int positionRoiX = getPositionRoi(couleur).first;
+		int positionRoiY = getPositionRoi(couleur).second;
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
-			for (int colonne = 0; colonne < nColonnes; colonne)
+			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
-				if (this->effectuerMouvement(ligne, colonne, this->getPositionRoi(couleur).first, this->getPositionRoi(couleur).second)) return true;
-				return false;
+				if (!pieceEnChemin(ligne, colonne, positionRoiX, positionRoiY) && echiquier_[ligne][colonne]->mouvementValide(positionRoiX, positionRoiY)) return true;
 			}
-
 		}
+		return false;
 	}
 };
