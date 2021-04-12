@@ -69,9 +69,22 @@ protected:
 class Roi : public Piece {
 public:
 	Roi(bool couleur) : Piece(couleur) {
-		couleur ? positionLigne_ = 7, positionColonne_ = 4 : positionLigne_ = 0, positionColonne_ = 4;
-		//        roi noir                                   roi blanc
-		compteur_++;
+		try
+		{
+			compteur_++;
+			if (compteur_ > 2) {
+				throw logic_error("Plus de deux instances de roi on ete construite.");
+				compteur_--;
+			}
+			else {
+				couleur ? positionLigne_ = 7, positionColonne_ = 4 : positionLigne_ = 0, positionColonne_ = 4;
+				//        roi noir                                   roi blanc
+			}
+		}
+		catch (logic_error& e)
+		{
+			cout << "Deux instances de roi on tente detre construite. Cette construction a ete blocque.";
+		}
 	}
 	~Roi() {
 		compteur_--;
@@ -98,8 +111,6 @@ public:
 private:
 	static int compteur_;
 };
-
-int Roi::compteur_ = 0;
 
 class Cavalier : public Piece {
 public:
