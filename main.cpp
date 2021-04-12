@@ -7,6 +7,7 @@
 */
 #include "Calc.hpp"
 #include "CalcWindow.hpp"
+#include "classes_projet.hpp"
 
 #include <QApplication>
 

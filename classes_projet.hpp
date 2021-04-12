@@ -60,8 +60,8 @@ public:
 	}
 
 protected:
-	int positionLigne_=0;
-	int positionColonne_=0;
+	int positionLigne_ = 0;
+	int positionColonne_ = 0;
 	bool couleur_; //0 = blanc, 1 = noir
 
 };
@@ -71,6 +71,10 @@ public:
 	Roi(bool couleur) : Piece(couleur) {
 		couleur ? positionLigne_ = 7, positionColonne_ = 4 : positionLigne_ = 0, positionColonne_ = 4;
 		//        roi noir                                   roi blanc
+		compteur_++;
+	}
+	~Roi() {
+		compteur_--;
 	}
 
 	bool mouvementValide(int positionLigneVoulue, int positionColonneVoulue) override {
@@ -88,7 +92,14 @@ public:
 
 	int positionLigneRoi = positionLigne_;
 	int positionColonneRoi = positionColonne_;
+
+	static int getCompteur() { return compteur_; }
+
+private:
+	static int compteur_;
 };
+
+int Roi::compteur_ = 0;
 
 class Cavalier : public Piece {
 public:
@@ -240,7 +251,6 @@ public:
 				echiquierTemporaire[ligne][colonne] = echiquier_[ligne][colonne];
 			}
 		}
-
 
 		if (echiquier_[positionActuelleX][positionActuelleY] == nullptr) return false; //peut pas bouger une piece qui existe pas
 		else if (pieceEnChemin(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY)) return false;
