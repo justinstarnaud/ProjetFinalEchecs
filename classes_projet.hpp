@@ -28,7 +28,14 @@ public:
 	Piece(bool couleur) { couleur_ = couleur; }
 	virtual ~Piece() = default;
 	Piece(const Piece&) = delete;
-	Piece& operator= (const Piece&) = delete;
+	Piece& operator= (const Piece& autrePiece) {
+		if (this != &autrePiece) {
+			positionLigne_ = autrePiece.positionLigne_;
+			positionColonne_ = autrePiece.positionColonne_;
+			couleur_ = autrePiece.couleur_;
+		}
+		return *this;
+	}
 
 	bool setPosition(int positionLigne, int positionColonne) { 
 		if (this->mouvementValide(positionLigne, positionColonne)) {
@@ -223,23 +230,50 @@ public:
 	}
 	
 	bool effectuerMouvement(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) {
+		Piece* echiquierTemporaire[8][8];
+		for (int ligne = 0; ligne < nLignes; ligne++)
+		{
+			for (int colonne = 0; colonne < nColonnes; colonne)
+			{
+				echiquierTemporaire[ligne][colonne] = echiquier_[ligne][colonne];
+			}
+		}
 		if (echiquier_[positionActuelleX][positionActuelleY] == nullptr) return false; //peut pas bouger une piece qui existe pas
 		else if (pieceEnChemin(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY)) return false;
 		else if (echiquier_[positionVoulueX][positionVoulueY] != nullptr) { //donc il y a une piece
 			bool memeCouleur = echiquier_[positionVoulueX][positionVoulueY]->getCouleur() == echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
-			if (memeCouleur) return false; //peut pas bouger sur une piece de ta couleur
-			else { //donc il y a une piece adverse
-				return echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, true);
+
+			if (memeCouleur) 
+				return false; //peut pas bouger sur une piece de ta couleur
+			else { 
+				//donc il y a une piece adverse
+				echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, true);
 			}
 		}
-		else { //donc il ny a pas de piece
-			//regarder la mise en echec
-			return echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, false);
+		else { 
+			//donc il ny a pas de piece
+			echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, false);
+		}
+
+		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
+		// on regarde si la derniere modification a genere un echec
+		if (miseEnEchec(couleur)) {
+			// on est alors en echec
+			// on veut remettre les pieces a l<etat initial et retourner faux
+			for (int ligne = 0; ligne < nLignes; ligne++)
+			{
+				for (int colonne = 0; colonne < nColonnes; colonne)
+				{
+					echiquier_[ligne][colonne] = echiquierTemporaire[ligne][colonne];
+				}
+			}
+			return false;
 		}
 	}
 
 private:
 	Piece* echiquier_[nLignes][nColonnes]; // un jeu d'échecs a 64 cases
+	bool etatEchec_;
 
 	bool echangerPiece(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY, bool pieceAdverse) {
 		if (echiquier_[positionActuelleX][positionActuelleY]->setPosition(positionVoulueX, positionVoulueY)) { //on change les attributs de la piece quon bouge si le mouvement est valide
@@ -286,7 +320,9 @@ private:
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
-				if (!pieceEnChemin(ligne, colonne, positionRoiX, positionRoiY) && echiquier_[ligne][colonne]->mouvementValide(positionRoiX, positionRoiY)) return true;
+				if (!pieceEnChemin(ligne, colonne, positionRoiX, positionRoiY) && echiquier_[ligne][colonne]->mouvementValide(positionRoiX, positionRoiY)) {
+					return true;
+				}
 			}
 		}
 		return false;
