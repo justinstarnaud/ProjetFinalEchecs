@@ -293,7 +293,6 @@ public:
 
 private:
 	Piece* echiquier_[nLignes][nColonnes]; // un jeu d'échecs a 64 cases
-	bool etatEchec_;
 
 	bool echangerPiece(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY, bool pieceAdverse) {
 		if (echiquier_[positionActuelleX][positionActuelleY]->setPosition(positionVoulueX, positionVoulueY)) { //on change les attributs de la piece quon bouge si le mouvement est valide

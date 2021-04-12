@@ -153,4 +153,19 @@ TEST(TestEchiquier, TestManger) {
 	EXPECT_FALSE(echiquier.effectuerMouvement(7, 0, 2, 0));
 }
 
+TEST(TestEchiquier, TestMiseEnEchec){
+	Echiquier echiquier = Echiquier();
+	EXPECT_TRUE(echiquier.effectuerMouvement(0, 0, 2, 0));
+	EXPECT_TRUE(echiquier.effectuerMouvement(2, 0, 2, 4)); // echec de la tour blanche
+
+	EXPECT_FALSE(echiquier.effectuerMouvement(7, 7, 6, 7)); // mouvement illegal puisque etat d echec
+	EXPECT_EQ(echiquier.getPiece(6,7), nullptr); // on remarque que la tour noir n<est pas aller a la position, car etat echec
+
+	EXPECT_TRUE(echiquier.effectuerMouvement(7, 6, 6, 4)); // mouvemnent possible qui protege l echec
+	EXPECT_EQ(echiquier.getPiece(7, 6), nullptr); // le cavalier est bien aller a pos(6,4)
+
+	EXPECT_FALSE(echiquier.effectuerMouvement(6, 4, 5, 2)); // mouvement illegal qui met les noir en echec (en decouvrant le roi)
+
+}
+
 #endif
