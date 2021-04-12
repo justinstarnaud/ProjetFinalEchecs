@@ -48,7 +48,6 @@ public:
 			return true;
 		}
 		else {
-			cout << "Position invalide" << endl;
 			return false;
 		}
 	}
@@ -75,12 +74,11 @@ public:
 	Roi(bool couleur) : Piece(couleur) {
 		try
 		{
-			compteur_++;
-			if (compteur_ > 2) {
+			if (compteur_ >= 2) {
 				throw ConstructionInvalide("Plus de deux instances de roi on ete construite.");
-				compteur_--;
 			}
 			else {
+				compteur_++;
 				couleur ? positionLigne_ = 7, positionColonne_ = 4 : positionLigne_ = 0, positionColonne_ = 4;
 				//        roi noir                                   roi blanc
 			}
@@ -247,23 +245,28 @@ public:
 		}
 	}
 
-	/*Piece* [8][8] operator= (const Piece* [8][8] autrePiece) {
+	Piece* getPiece(int ligne, int colonne) {
+		return echiquier_[ligne][colonne];
+	}
+
+	void copie(Piece* nouveauEchiquier[8][8], Piece* echiquier[8][8]) {
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
-				this = autrePiece;
+				nouveauEchiquier[ligne][colonne] = echiquier[ligne][colonne];
 			}
-	}*/
+		}
+	}
 	
 	bool effectuerMouvement(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) {
-		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
 		bool retour;
 		Piece* echiquierTemporaire[8][8];
-		echiquierTemporaire = echiquier_;
+		copie(echiquierTemporaire, echiquier_);
 
 		if (echiquier_[positionActuelleX][positionActuelleY] == nullptr) return false; //peut pas bouger une piece qui existe pas
-		else if (pieceEnChemin(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY)) return false;
+		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
+		if (pieceEnChemin(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY)) return false;
 		else if (echiquier_[positionVoulueX][positionVoulueY] != nullptr) { //donc il y a une piece
 			bool memeCouleur = echiquier_[positionVoulueX][positionVoulueY]->getCouleur() == echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
 
@@ -278,12 +281,11 @@ public:
 			//donc il ny a pas de piece
 			retour = echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, false);
 		}
-
-		// on regarde si la derniere modification a genere un echec
-		if (miseEnEchec(couleur) && retour) {
+		 //on regarde si la derniere modification a genere un echec
+		if (retour && miseEnEchec(couleur)) {
 			// on est alors en echec
-			// on veut remettre les pieces a l<etat initial et retourner faux
-			echiquier_ = echiquierTemporaire;
+			// on veut remettre les pieces a letat initial et retourner faux
+			copie(echiquier_, echiquierTemporaire);
 			return false;
 		}
 		return retour;
@@ -329,6 +331,7 @@ private:
 					return echiquier_[ligne][colonne]->getPosition();
 			}
 		}
+		return {}; //pour eviter le warning "les chemins de code ne retourne pas tous une valeur"
 	}
 
 	bool miseEnEchec(bool couleur) {
@@ -338,7 +341,8 @@ private:
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
-				if (!pieceEnChemin(ligne, colonne, positionRoiX, positionRoiY) && echiquier_[ligne][colonne]->mouvementValide(positionRoiX, positionRoiY)) {
+				if (!echiquier_[ligne][colonne] || echiquier_[ligne][colonne]->getCouleur() == couleur) continue;
+				else if (!pieceEnChemin(ligne, colonne, positionRoiX, positionRoiY) && echiquier_[ligne][colonne]->mouvementValide(positionRoiX, positionRoiY)) {
 					return true;
 				}
 			}
