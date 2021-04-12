@@ -103,11 +103,6 @@ public:
 		return false;
 	}
 
-	int positionLigneRoi = positionLigne_;
-	int positionColonneRoi = positionColonne_;
-
-	static int getCompteur() { return compteur_; }
-
 private:
 	static int compteur_;
 };
