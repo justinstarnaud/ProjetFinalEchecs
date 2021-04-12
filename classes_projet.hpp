@@ -233,11 +233,13 @@ public:
 		Piece* echiquierTemporaire[8][8];
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
-			for (int colonne = 0; colonne < nColonnes; colonne)
+			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
 				echiquierTemporaire[ligne][colonne] = echiquier_[ligne][colonne];
 			}
 		}
+
+
 		if (echiquier_[positionActuelleX][positionActuelleY] == nullptr) return false; //peut pas bouger une piece qui existe pas
 		else if (pieceEnChemin(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY)) return false;
 		else if (echiquier_[positionVoulueX][positionVoulueY] != nullptr) { //donc il y a une piece
@@ -262,7 +264,7 @@ public:
 			// on veut remettre les pieces a l<etat initial et retourner faux
 			for (int ligne = 0; ligne < nLignes; ligne++)
 			{
-				for (int colonne = 0; colonne < nColonnes; colonne)
+				for (int colonne = 0; colonne < nColonnes; colonne++)
 				{
 					echiquier_[ligne][colonne] = echiquierTemporaire[ligne][colonne];
 				}
@@ -283,6 +285,7 @@ private:
 			echiquier_[positionActuelleX][positionActuelleY] = nullptr; //il y a maintenant rien a la position actuelle
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -305,7 +308,7 @@ private:
 	pair<int, int> getPositionRoi(bool couleur) {
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
-			for (int colonne = 0; colonne < nColonnes; colonne)
+			for (int colonne = 0; colonne < nColonnes; colonne++)
 			{
 				if (dynamic_cast<Roi*>(echiquier_[ligne][colonne]) && echiquier_[ligne][colonne]->getCouleur() == couleur)
 					return echiquier_[ligne][colonne]->getPosition();
