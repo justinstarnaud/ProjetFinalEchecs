@@ -230,6 +230,8 @@ public:
 	}
 	
 	bool effectuerMouvement(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) {
+		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
+		bool retour;
 		Piece* echiquierTemporaire[8][8];
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
@@ -249,15 +251,14 @@ public:
 				return false; //peut pas bouger sur une piece de ta couleur
 			else { 
 				//donc il y a une piece adverse
-				echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, true);
+				retour = echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, true);
 			}
 		}
 		else { 
 			//donc il ny a pas de piece
-			echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, false);
+			retour = echangerPiece(positionActuelleX, positionActuelleY, positionVoulueX, positionVoulueY, false);
 		}
 
-		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
 		// on regarde si la derniere modification a genere un echec
 		if (miseEnEchec(couleur)) {
 			// on est alors en echec
@@ -271,6 +272,7 @@ public:
 			}
 			return false;
 		}
+		return retour;
 	}
 
 private:
