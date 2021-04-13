@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 	calcWindow.show();*/
 	VueEchiquier vueEchiquier;
 	vueEchiquier.show();
-	vueEchiquier.resize(641, vueEchiquier.width());
-	vueEchiquier.resize(641, vueEchiquier.height());
+	vueEchiquier.resize(900, vueEchiquier.width());
+	vueEchiquier.resize(900, vueEchiquier.height());
 	vueEchiquier.show();
 
 	app.exec();

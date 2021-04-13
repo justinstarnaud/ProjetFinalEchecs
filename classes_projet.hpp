@@ -256,7 +256,7 @@ public:
 		return echiquier_[ligne][colonne];
 	}
 
-	void copie(Piece* nouveauEchiquier[8][8], Piece* echiquier[8][8]) {
+	void copiePeuProfonde(Piece* nouveauEchiquier[8][8], Piece* echiquier[8][8]) {
 		for (int ligne = 0; ligne < nLignes; ligne++)
 		{
 			for (int colonne = 0; colonne < nColonnes; colonne++)
@@ -265,11 +265,15 @@ public:
 			}
 		}
 	}
+
+	Echiquier& operator=(const Echiquier& echiquier) {
+
+	}
 	
 	bool effectuerMouvement(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) {
 		bool retour;
 		Piece* echiquierTemporaire[8][8];
-		copie(echiquierTemporaire, echiquier_);
+		copiePeuProfonde(echiquierTemporaire, echiquier_);
 
 		if (echiquier_[positionActuelleX][positionActuelleY] == nullptr) return false; //peut pas bouger une piece qui existe pas
 		bool couleur = echiquier_[positionActuelleX][positionActuelleY]->getCouleur();
@@ -292,7 +296,7 @@ public:
 		if (retour && miseEnEchec(couleur)) {
 			// on est alors en echec
 			// on veut remettre les pieces a letat initial et retourner faux
-			copie(echiquier_, echiquierTemporaire);
+			copiePeuProfonde(echiquier_, echiquierTemporaire);
 			return false;
 		}
 		return retour;

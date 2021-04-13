@@ -10,6 +10,7 @@
 class VueEchiquier : public QWidget {
 	Q_OBJECT
 public:
+	VueEchiquier() = default;
 	VueEchiquier(Echiquier& echiquier) {
 		//echiquier_ = echiquier;
 	}
