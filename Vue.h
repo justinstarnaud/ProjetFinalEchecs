@@ -9,10 +9,16 @@
 
 class VueEchiquier : public QWidget {
 	Q_OBJECT
-protected:
+public:
+	VueEchiquier(Echiquier& echiquier) {
+		//echiquier_ = echiquier;
+	}
 	void paintEvent(QPaintEvent* e);
 
 signals:
 
 public slots:
+
+private:
+	Echiquier echiquier_;
 };

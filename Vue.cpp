@@ -36,7 +36,9 @@ void VueEchiquier::paintEvent(QPaintEvent* event) {
 	}*/
 	QVector<QRectF> rectangles;
 	QPainter painter(this);
-
+	QFont font = painter.font();
+	font.setPointSize(50);
+	painter.setFont(font);
 
 	for (int i = 0; i < 8; i++)
 		for (int j = 0; j < 8; j++)
@@ -52,11 +54,15 @@ void VueEchiquier::paintEvent(QPaintEvent* event) {
 				painter.fillRect(rectangle, myColor1);
 			}
 			rectangles.push_back(rectangle);
-			if (i == 1 && j == 1)
+			if (echiquier_.getPiece(i, j) != nullptr) 
 			{
-				QImage myImage;
-				myImage.load("roi.jpeg");
-				painter.drawImage(rectangle, myImage);
+				Piece* piece = echiquier_.getPiece(i, j);
+				QString pieceVue;
+				if (dynamic_cast<Roi*>(piece)) pieceVue = QChar(0x265A);
+				else if (dynamic_cast<Tour*>(piece)) pieceVue = QChar(0x2656);
+				else if (dynamic_cast<Cavalier*>(piece)) pieceVue = QChar(0x2658);
+
+				painter.drawText(rectangle, Qt::AlignCenter, pieceVue);
 			}
 		}
 

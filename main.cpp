@@ -53,22 +53,9 @@ int main(int argc, char *argv[])
 	calcWindow.show();*/
 	VueEchiquier vueEchiquier;
 	vueEchiquier.show();
-	/*QImage myImage;
-	myImage.load("roi.png", "png");*/
-
-
-	//QLabel myLabel;
-	//myLabel.setPixmap(QPixmap::fromImage(myImage));
-
-	//myLabel.show();
-
-	/*QImage myImage;
-	myImage.load("roi.png");
-
-	QLabel myLabel;
-	myLabel.setPixmap(QPixmap::fromImage(myImage));
-
-	myLabel.show();*/
+	vueEchiquier.resize(641, vueEchiquier.width());
+	vueEchiquier.resize(641, vueEchiquier.height());
+	vueEchiquier.show();
 
 	app.exec();
 
