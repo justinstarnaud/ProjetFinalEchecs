@@ -8,8 +8,11 @@
 #include "Calc.hpp"
 #include "CalcWindow.hpp"
 #include "classes_projet.hpp"
+#include "Vue.h"
 
 #include <QApplication>
+#include <QGraphicsScene>
+#include <QGraphicsRectItem>
 
 #if __has_include("bibliotheque_cours.hpp")
 #include "bibliotheque_cours.hpp"
@@ -41,11 +44,14 @@ int Roi::compteur_ = 0;
 int main(int argc, char *argv[])
 {
 	bibliotheque_cours::VerifierFuitesAllocations verifierFuitesAllocations;
-	//QApplication app(argc, argv);
+	QApplication app(argc, argv);
+	QGraphicsScene* scene = new QGraphicsScene();
 	initialiserBibliothequeCours(argc, argv);
 
 	//CalcWindow calcWindow;
 	//calcWindow.show();
+	VueEchiquier vueEchiquier;
+	vueEchiquier.show();
+	app.exec();
 	return 0;
-	//app.exec();
 }

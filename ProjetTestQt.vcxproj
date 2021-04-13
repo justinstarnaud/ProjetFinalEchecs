@@ -125,7 +125,10 @@
     <QtMoc Include="CalcWindow.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="classes_projet.hpp" />
+    <QtMoc Include="classes_projet.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Vue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

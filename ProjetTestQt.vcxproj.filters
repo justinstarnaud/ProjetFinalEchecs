@@ -51,10 +51,11 @@
     <QtMoc Include="CalcWindow.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="classes_projet.hpp">
+    <QtMoc Include="classes_projet.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
+    <QtMoc Include="Vue.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>
