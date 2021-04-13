@@ -22,11 +22,11 @@ void VueEchiquier::paintEvent(QPaintEvent* event) {
 			QRectF rectangle(80 * ligne, 80 * colonne, 80.0, 80.0);
 			if ((ligne % 2) == (colonne % 2))
 			{
-				const QColor myColor(174, 173, 172);
+				const QColor myColor(255, 255, 255);
 				painter.fillRect(rectangle, myColor);
 			}
 			else {
-				const QColor myColor1(0, 99, 37);
+				const QColor myColor1(50, 137, 48);
 				painter.fillRect(rectangle, myColor1);
 			}
 			rectangles.push_back(rectangle);
@@ -43,7 +43,5 @@ void VueEchiquier::paintEvent(QPaintEvent* event) {
 				painter.drawText(rectangle, Qt::AlignCenter, pieceVue);
 			}
 		}
-
 	painter.drawRects(rectangles);
-
 }
