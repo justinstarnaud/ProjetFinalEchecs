@@ -13,6 +13,7 @@
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QLabel>
 
 #if __has_include("bibliotheque_cours.hpp")
 #include "bibliotheque_cours.hpp"
@@ -48,10 +49,18 @@ int main(int argc, char *argv[])
 	QGraphicsScene* scene = new QGraphicsScene();
 	initialiserBibliothequeCours(argc, argv);
 
-	//CalcWindow calcWindow;
-	//calcWindow.show();
+	/*CalcWindow calcWindow;
+	calcWindow.show();*/
 	VueEchiquier vueEchiquier;
 	vueEchiquier.show();
+	/*QImage myImage;
+	myImage.load("roi.png", "png");*/
+
+
+	//QLabel myLabel;
+	//myLabel.setPixmap(QPixmap::fromImage(myImage));
+
+	//myLabel.show();
 	app.exec();
 	return 0;
 }
