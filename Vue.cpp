@@ -8,7 +8,7 @@
 #include <QGraphicsRectItem>
 #include <QLabel>
 
-void VueEchiquier::afficherEchiquier(QPaintEvent* event) {
+void VueEchiquier::paintEvent(QPaintEvent* event) {
 	/*int x = 0, y = 0;
 	int couleur = 0;
 	QPainter painter(this);
@@ -34,7 +34,7 @@ void VueEchiquier::afficherEchiquier(QPaintEvent* event) {
 		x = 0;
 		couleur == 0 ? couleur = 1 : couleur = 0;
 	}*/
-	/*QVector<QRectF> rectangles;
+	QVector<QRectF> rectangles;
 	QPainter painter(this);
 
 
@@ -44,21 +44,16 @@ void VueEchiquier::afficherEchiquier(QPaintEvent* event) {
 			QRectF rectangle(80 * i, 80 * j, 80.0, 80.0);
 			if ((i % 2) == (j % 2))
 			{
-				const QColor myColor(118, 150, 86, 255);
+				const QColor myColor(255, 255, 255);
 				painter.fillRect(rectangle, myColor);
 			}
 			else {
-				const QColor myColor1(238, 238, 210, 255);
+				const QColor myColor1(0, 0, 0);
 				painter.fillRect(rectangle, myColor1);
 			}
 			rectangles.push_back(rectangle);
 		}
 
-	painter.drawRects(rectangles);*/
-	QImage myImage;
-	myImage.load("roi.png", "png");
+	painter.drawRects(rectangles);
 
-	QPainter painter;
-	QRectF rectangle(80, 80, 80.0, 80.0);
-	painter.drawImage(rectangle, myImage);
 }

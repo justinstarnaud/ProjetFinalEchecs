@@ -61,6 +61,16 @@ int main(int argc, char *argv[])
 	//myLabel.setPixmap(QPixmap::fromImage(myImage));
 
 	//myLabel.show();
+
+	/*QImage myImage;
+	myImage.load("roi.png");
+
+	QLabel myLabel;
+	myLabel.setPixmap(QPixmap::fromImage(myImage));
+
+	myLabel.show();*/
+
 	app.exec();
+
 	return 0;
 }

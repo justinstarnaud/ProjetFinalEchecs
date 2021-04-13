@@ -10,5 +10,9 @@
 class VueEchiquier : public QWidget {
 	Q_OBJECT
 protected:
-	void afficherEchiquier(QPaintEvent* e);
+	void paintEvent(QPaintEvent* e);
+
+signals:
+
+public slots:
 };
