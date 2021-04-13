@@ -62,7 +62,7 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\OneDrive\Documents\INF1015\image de pieces\roi.png">
+    <Image Include="..\..\..\OneDrive\Documents\INF1015\image de pieces\roi.jpeg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

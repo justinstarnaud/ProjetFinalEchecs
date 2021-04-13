@@ -52,6 +52,12 @@ void VueEchiquier::paintEvent(QPaintEvent* event) {
 				painter.fillRect(rectangle, myColor1);
 			}
 			rectangles.push_back(rectangle);
+			if (i == 1 && j == 1)
+			{
+				QImage myImage;
+				myImage.load("roi.jpeg");
+				painter.drawImage(rectangle, myImage);
+			}
 		}
 
 	painter.drawRects(rectangles);

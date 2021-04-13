@@ -132,7 +132,7 @@
     <QtMoc Include="Vue.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\OneDrive\Documents\INF1015\image de pieces\roi.png" />
+    <Image Include="..\..\..\OneDrive\Documents\INF1015\image de pieces\roi.jpeg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
