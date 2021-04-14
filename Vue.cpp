@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QLabel>
+#include <QPushButton>
 
 void VueEchiquier::paintEvent(QPaintEvent* event) {
 
@@ -30,7 +31,7 @@ void VueEchiquier::paintEvent(QPaintEvent* event) {
 				painter.fillRect(rectangle, myColor1);
 			}
 			rectangles.push_back(rectangle);
-
+		
 			if (echiquier_.getPiece(colonne, ligne) != nullptr) 
 			{
 				Piece* piece = echiquier_.getPiece(colonne, ligne);

@@ -11,6 +11,7 @@ class VueEchiquier : public QWidget {
 	Q_OBJECT
 public:
 	VueEchiquier(Echiquier& echiquier) : echiquier_(echiquier) {}
+	~VueEchiquier() override = default;
 	void paintEvent(QPaintEvent* e);
 
 signals:

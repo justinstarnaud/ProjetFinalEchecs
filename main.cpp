@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
 {
 	bibliotheque_cours::VerifierFuitesAllocations verifierFuitesAllocations;
 	QApplication app(argc, argv);
-	QGraphicsScene* scene = new QGraphicsScene();
 	initialiserBibliothequeCours(argc, argv);
 
 	/*CalcWindow calcWindow;
