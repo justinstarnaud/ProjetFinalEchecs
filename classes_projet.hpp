@@ -266,8 +266,15 @@ public:
 		}
 	}
 
-	Echiquier& operator=(const Echiquier& echiquier) {
-
+	Echiquier& operator=(const Echiquier& autre) {
+		for (int ligne = 0; ligne < nLignes; ligne++)
+		{
+			for (int colonne = 0; colonne < nColonnes; colonne++)
+			{
+				this->echiquier_[ligne][colonne] = autre.echiquier_[ligne][colonne];
+			}
+		}
+		return *this;
 	}
 	
 	bool effectuerMouvement(int positionActuelleX, int positionActuelleY, int positionVoulueX, int positionVoulueY) {
