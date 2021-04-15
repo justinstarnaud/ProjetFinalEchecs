@@ -28,7 +28,7 @@ VueEchiquier::VueEchiquier(QWidget* parent, Echiquier& echiquier) : echiquier_(e
 		for (int colonne = 0; colonne < nColonnes; colonne++)
 		{
 			QPushButton* bouton;
-			if (echiquier_.getPiece(colonne, ligne) != nullptr)
+			if (echiquier_.getPiece(colonne, ligne))
 			{
 				Piece* piece = echiquier_.getPiece(colonne, ligne);
 				bool couleur = piece->getCouleur();
@@ -62,7 +62,6 @@ VueEchiquier::VueEchiquier(QWidget* parent, Echiquier& echiquier) : echiquier_(e
 			bouton->setAutoFillBackground(true);
 			bouton->setFlat(true);
 			bouton->setPalette(couleurVue);
-
 		}
 	}
 	setCentralWidget(widget);
