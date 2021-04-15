@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	/*CalcWindow calcWindow;
 	calcWindow.show();*/
 	Echiquier echiquier;
-	VueEchiquier vueEchiquier = VueEchiquier(echiquier);
+	//VueEchiquier vueEchiquier = VueEchiquier(nullptr, echiquier);
 	echiquier.effectuerMouvement(0, 0, 0, 1);
 	echiquier.effectuerMouvement(0, 0, 7, 0);
 	echiquier.effectuerMouvement(0, 0, 6, 0);
@@ -60,12 +60,12 @@ int main(int argc, char *argv[])
 	echiquier.effectuerMouvement(0, 6, 1, 4);
 	echiquier.effectuerMouvement(1, 4, 0, 6);
 	echiquier.effectuerMouvement(0, 7, 1, 7);
-	//echiquier.effectuerMouvement(0, 1, 2, 2);
-	//echiquier.effectuerMouvement(7, 7, 6, 7);
-	//echiquier.effectuerMouvement(7, 7, 0, 7);
-	//echiquier.effectuerMouvement(7, 7, 6, 7);
-	vueEchiquier.resize(900, vueEchiquier.width());
-	vueEchiquier.resize(900, vueEchiquier.height());
+	echiquier.effectuerMouvement(0, 1, 2, 2);
+	echiquier.effectuerMouvement(7, 7, 6, 7);
+	echiquier.effectuerMouvement(7, 7, 0, 7);
+	echiquier.effectuerMouvement(7, 7, 6, 7);
+	VueEchiquier vueEchiquier = VueEchiquier(nullptr, echiquier);
+	vueEchiquier.update();
 	vueEchiquier.show();
 
 	app.exec();

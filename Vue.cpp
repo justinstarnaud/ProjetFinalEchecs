@@ -8,41 +8,63 @@
 #include <QGraphicsRectItem>
 #include <QLabel>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QColor>
+#include <QPalette>
+#include <QGridLayout>
 
-void VueEchiquier::paintEvent(QPaintEvent* event) {
+VueEchiquier::VueEchiquier(QWidget* parent, Echiquier& echiquier) : echiquier_(echiquier),  QMainWindow(parent) {
 
-	QVector<QRectF> rectangles;
-	QPainter painter(this);
-	QFont font = painter.font();
-	font.setPointSize(40);
-	painter.setFont(font);
+	auto widget = new QWidget(this);
+	auto layout = new QVBoxLayout(widget);
+	auto vue = new QGridLayout();
 
-	for (int ligne = 0; ligne < nLignes; ligne++)
+	layout->addLayout(vue);
+	vue->setVerticalSpacing(0);
+	vue->setHorizontalSpacing(0);
+
+	for (int ligne = 0; ligne < nLignes; ligne++) {
 		for (int colonne = 0; colonne < nColonnes; colonne++)
 		{
-			QRectF rectangle(80 * ligne, 80 * colonne, 80.0, 80.0);
-			if ((ligne % 2) == (colonne % 2))
-			{
-				const QColor myColor(255, 255, 255);
-				painter.fillRect(rectangle, myColor);
-			}
-			else {
-				const QColor myColor1(50, 137, 48);
-				painter.fillRect(rectangle, myColor1);
-			}
-			rectangles.push_back(rectangle);
-		
-			if (echiquier_.getPiece(colonne, ligne) != nullptr) 
+			QPushButton* bouton;
+			if (echiquier_.getPiece(colonne, ligne) != nullptr)
 			{
 				Piece* piece = echiquier_.getPiece(colonne, ligne);
 				bool couleur = piece->getCouleur();
-				QString pieceVue;
-				if (dynamic_cast<Roi*>(piece)) couleur ? pieceVue = QChar(0x2654) : pieceVue = QChar(0x265A);
-				else if (dynamic_cast<Tour*>(piece)) couleur ? pieceVue = QChar(0x2656): pieceVue = QChar(0x265C);
-				else if (dynamic_cast<Cavalier*>(piece)) couleur ? pieceVue = QChar(0x2658): pieceVue = QChar(0x265E);
-
-				painter.drawText(rectangle, Qt::AlignCenter, pieceVue);
+				QChar pieceVue;
+				if (dynamic_cast<Roi*>(piece)) {
+					couleur ? pieceVue = QChar(0x265A) : pieceVue = QChar(0x2654);
+				}
+				else if (dynamic_cast<Tour*>(piece)) {
+					couleur ? pieceVue = QChar(0x265C) : pieceVue = QChar(0x2656);
+				}
+				else if (dynamic_cast<Cavalier*>(piece)) {
+					couleur ? pieceVue = QChar(0x265E) : pieceVue = QChar(0x2658);
+				}
+				bouton = new QPushButton(pieceVue, this);
 			}
+			else {
+				bouton = new QPushButton(this);
+			}
+			QFont font = VueEchiquier::font();
+			font.setPointSize(45);
+			bouton->setFont(font);
+			vue->addWidget(bouton, nColonnes - 1 - colonne, ligne);
+			QSize taille = QSize(100, 100);
+			bouton->setFixedSize(taille);
+
+			QColor couleur;
+			(ligne % 2) == (colonne % 2) ? couleur = QColor(255, 255, 255) : couleur = QColor(50, 137, 48);
+
+			QPalette couleurVue = palette();
+			couleurVue.setColor(QPalette::Button, couleur);
+			bouton->setAutoFillBackground(true);
+			bouton->setFlat(true);
+			bouton->setPalette(couleurVue);
+
 		}
-	painter.drawRects(rectangles);
+	}
+	setCentralWidget(widget);
+	setWindowTitle("Jeu d'Echec");
 }

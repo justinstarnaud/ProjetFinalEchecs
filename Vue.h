@@ -7,12 +7,11 @@
 #include "classes_projet.hpp"
 
 
-class VueEchiquier : public QWidget {
+class VueEchiquier : public QMainWindow {
 	Q_OBJECT
 public:
-	VueEchiquier(Echiquier& echiquier) : echiquier_(echiquier) {}
+	VueEchiquier(QWidget* parent, Echiquier& echiquier);
 	~VueEchiquier() override = default;
-	void paintEvent(QPaintEvent* e);
 
 signals:
 
